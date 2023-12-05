@@ -92,7 +92,7 @@ See the [details document](docs/details.md) for information on implementing Dijk
 
 ## Part 2: Creating `GraphDemo`
 
-The starter code for `GraphDemo.java` includes a `main` method. Feel free to organize `GraphDemo` however you see fit - it will not be autograded. **Running your `GraphDemo` `main` method should produce a demonstration of the functionality of your project on the USA highway network -- it does that minimally, you're welcome to modify the code. See the  [details document](docs/details.md) for information.
+The starter code for `GraphDemo.java` includes a `main` method. Feel free to organize `GraphDemo` however you see fit - it will not be autograded. *Running your `GraphDemo` `main` method should produce a demonstration of the functionality of your project on the USA highway network* -- it *already does that minimally*, you're welcome to modify the code. See the  [details document](docs/details.md) for information. You do *NOT* need to make changes for the purposes of grades.
 
 
 ## Submitting and Grading
