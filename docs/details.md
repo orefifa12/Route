@@ -155,6 +155,8 @@ The runtime complexity of your implementation should be at most $`O(N+M) \log(N)
 
 ## GraphDemo User Input
 
+** You do not need to modify `GraphDemo` ** for this project, but information below describes changes you can make as a challenge so you can interact with the code and data.
+
 An extensive list of latitude-longitude coordinates for US Cities has been included in `data/uscities.csv` (that the file is a `.csv` means each row contains an entry where the values are separated/delimited by commas `,`). This data was obtained from [simplemaps.com](https://simplemaps.com/data/us-cities) for educational use only. 
 
 The code you're given finds a path between Miami FL and Seattle WA. You can modify the code to allow the user to input their source and destination cities by typing them into the terminal. You are welcome to implement whatever input format you prefer, but you're given code you can uncomment and use. For example, in the code you'll see a `Scanner` object initialized to `System.in` to read user input from the terminal. See the documentation for the java [`Scanner` class here](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html) which includes an example reading from `System.in`.
