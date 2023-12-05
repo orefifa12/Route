@@ -100,7 +100,6 @@ The starter code for `GraphDemo.java` includes a `main` method. Feel free to org
 Commit and push your code often as you develop. To submit:
 
 1. Submit your code on gradescope to the autograder. If you worked with a partner, you and your partner will make a **single submission together on gradescope**. Refer to [this document](https://docs.google.com/document/d/e/2PACX-1vREK5ajnfEAk3FKjkoKR1wFtVAAEN3hGYwNipZbcbBCnWodkY2UI1lp856fz0ZFbxQ3yLPkotZ0U1U1/pub) for submitting to Gradescope with a partner. 
-2. Submit a link to your demo in the separate Demo assignment. **Be sure that your link is valid and your video is viewable without sign-in.** You can host your demo anywhere you like (unlisted youtube, zoom cloud, google drive, Duke box, ...) as long as we can access it from a link and view it. Again, if you worked with a partner, you and your partner will make a single combined submission.
 
 The first part, `GraphProcessor`, will be autograded for the correctness and efficiency of the code. Most of the points are for correctness, so focus on that first rather than on efficiency, which you'll likely achieve simply by following directions. If you modify `GraphDemo` as suggested in the [details document](docs/details.md) you can be proud of your accomplishment.
 
