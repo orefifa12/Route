@@ -65,6 +65,13 @@ The `public` methods of `Visualize` are:
 - `drawGraph` takes a `List<Point>` and calls `drawPoint` on each, as well as a `List<Point[]>`, and attempts to call `drawEdge` on the index 0 and index 1 elements of each array in the latter list.
 - `drawRoute` takes a `List<Point>` and draws each point in the list, connecting each subsequent two points by an edge. **This is the method you are most likely to directly use in visualizing the route(s) you calculate.**
 
+As an example, here is screen-capture of `drawRoute` from Miami FL to Seattle WA.
+<details>
+<summary>Click for Image</summary>
+<div align="center">
+  <img src="images/miamiseattle.png">
+</div>
+</details>
 
 ## Graph Data
 
