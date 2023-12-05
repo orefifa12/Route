@@ -65,6 +65,8 @@ The `public` methods of `Visualize` are:
 - `drawGraph` takes a `List<Point>` and calls `drawPoint` on each, as well as a `List<Point[]>`, and attempts to call `drawEdge` on the index 0 and index 1 elements of each array in the latter list.
 - `drawRoute` takes a `List<Point>` and draws each point in the list, connecting each subsequent two points by an edge. **This is the method you are most likely to directly use in visualizing the route(s) you calculate.**
 
+### Visualizing a Route 
+
 As an example, here is screen-capture of `drawRoute` from Miami FL to Seattle WA.
 <details>
 <summary>Click for Image</summary>
@@ -114,14 +116,16 @@ In other words:
 
 ## Method initialize
 
-The method should read the data from the file and create a representation of the graph, **stored in the instance variables** so that the graph representation is avaialble to subsequent method calls. If the file cannot be opened or does not have the correct format, the method throws an `Exception`, for example:
+The method should read the data from the file and create a representation of the graph, **stored in the instance variables** so that the graph representation is avaialble to subsequent method calls. If the file cannot be opened or does not have the correct format, the method throws an `IOException`, for example:
 ```java
-throw new Exception("Could not read .graph file");
+throw new IOException("Could not read .graph file");
 ```
 
 You can see previous projects for examples of reading data from files, or you can see the `readVis` method in the `Visualize` class of the starter code. For example, you can create a `Scanner` to read from the input stream. See the documentation for the java [`Scanner` class here](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html). Chapter 4 of the course Zybook also includes a section on file input. You might use the `hasNextDouble()`, `nextDouble()`, `hasNextInteger()`, and `nextInteger()`, etc. methods to read a value at a time, or you can just use [the `nextLine()` method](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html#nextLine()) to read a line at a time and then `split` the resulting String. If you take the latter approach, you may find [the `Double.parseDouble()` method](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html#parseDouble(java.lang.String)) and [the `Integer.parseInt()` method](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html#parseInt(java.lang.String)) helpful for converting a String of a number to the number itself. You can also review the reading code you wrote in *P1: NBody*.
 
-Method `initialize` should always be called first before any of the subsequent methods. Make sure to verify that your `initialize` method is working as you expect before proceeding, as an incorrect `initialize` method will also cause problems with later methods. You might consider, for example, implementing a `main` method purely for verification purposes, and printing or using the debugger to view your graph representation of `simple.graph`, comparing to what is visualized in `simpleGraph.png`; see the section on the  `.graph` format for graphs above.
+**You are strongly encouraged to read the data file using `.hasNextLine` and `.nextLine` methods, then parsing the line using `.split(",")` and other methods as described above.** Using `.nextInteger` may require you to skip newlines that aren't read by `nextInteger`. 
+
+Method `initialize` should always be called first before any of the subsequent methods. Make sure to verify that your `initialize` method is working as you expect it to before proceeding, as an incorrect `initialize` method will also cause problems with later methods. You might consider, for example, implementing a `main` method purely for verification purposes, and printing or using the debugger to view your graph representation of `simple.graph`, comparing to what is visualized in `simpleGraph.png`; see the section on the  `.graph` format for graphs above.
 
 ## Using JUnit
 
@@ -145,7 +149,7 @@ That should be it!
 
 ## Dijsktra's algorithm for method `route`
 
-This method will require you to search in the graph itself, and must also take into account the fact that the graph is weighted while searching for shortest paths. You will need to adapt Dijkstra's algorithm to accomplish this. You can use the `java.util` data structure `PriorityQueue` with an appropriate `Comparator`. Note that this data structure does not support operations to change the priority of an element, so instead your implementation should simply `add` an element again any time a new shorter path is discovered, with the corresponding smaller distance. You may test correctness using `testRoute()` in JUnit.
+This method will require you to search in the graph itself, and must also take into account the fact that the graph is weighted while searching for shortest paths. You will need to use Dijkstra's algorithm to accomplish this. You can use the `java.util` data structure `PriorityQueue` with an appropriate `Comparator`. Note that this data structure does not support operations to change the priority of an element, so instead your implementation should simply `add` an element again any time a new shorter path is discovered, with the corresponding smaller distance. You may test correctness using `testRoute()` in JUnit. We discussed this code in class on December 4.
 
 The runtime complexity of your implementation should be at most $`O(N+M) \log(N))`$ where $`N`$ is the number of vertices in the graph, $`M`$ is the number of edges in the graph, and we are assuming that each vertex is connected to at most a constant number of other vertices due to the way we use the `PriorityQueue`. Note that the autograder has efficiency tests for full credit. 
 
@@ -153,7 +157,7 @@ The runtime complexity of your implementation should be at most $`O(N+M) \log(N)
 
 An extensive list of latitude-longitude coordinates for US Cities has been included in `data/uscities.csv` (that the file is a `.csv` means each row contains an entry where the values are separated/delimited by commas `,`). This data was obtained from [simplemaps.com](https://simplemaps.com/data/us-cities) for educational use only. 
 
-The code you're given allows the user to input their source and destination cities by typing them into the terminal. You are welcome to implement whatever input format you prefer, but this is probably the simplest. For example, in the code you'll see a `Scanner` object initialized to `System.in` to read user input from the terminal. See the documentation for the java [`Scanner` class here](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html) which includes an example reading from `System.in`.
+The code you're given finds a path between Miami FL and Seattle WA. You can modify the code to allow the user to input their source and destination cities by typing them into the terminal. You are welcome to implement whatever input format you prefer, but you're given code you can uncomment and use. For example, in the code you'll see a `Scanner` object initialized to `System.in` to read user input from the terminal. See the documentation for the java [`Scanner` class here](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html) which includes an example reading from `System.in`.
 
 Note that if you are running directly from VS Code and want to get user input form the terminal, you need to make sure VS Code is configured to use the terminal for standard input/output. That is the default, but you may have optionally changed to use the debug console, in which case you would want to switch back. [See the directions here](https://https://coursework.cs.duke.edu/201fall23/resources-201/-/blob/main/installingSoftware.md#optional-change-program-output-from-console-to-terminal) and make sure you have selected `integratedTerminal`.
 
@@ -166,4 +170,13 @@ Note that if you are running directly from VS Code and want to get user input fo
 4. The demo indicates the total distance (in miles) of the route calculated.
 
 5. The demo generates a visualization of the route calculated projected onto the map of the USA (see `images/usa.png` and `data/usa.vis`). You can do this using the [`Visualize` class](#the-visualize-class).
+
+The code you're given does this for hard-wired Miami FL and Seattle WA. If you uncomment the user-interaction code, you'll be able to enter Durham NC and other cities. As a challenge, write code to find routes between three cities. The image below, for example, routes from Miami FL to San Diego CA and then to Seattle WA. You can write and call code to find such segmented routes as a challenge.
+
+<details>
+<summary>Click for Image</summary>
+<div align="center">
+  <img src="images/routesegments.png">
+</div>
+</details>
 
