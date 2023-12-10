@@ -21,10 +21,17 @@ public class GraphProcessor {
      */
 
     // include instance variables here
+    private HashMap<Point, List<Point>> myMap;
+    private int numVertices;
+    private int numEdges;
+    private Point[] vertices;
 
     public GraphProcessor(){
         // TODO initialize instance variables
-
+        myMap = new HashMap<>();
+        numVertices = 0;
+        numEdges = 0;
+        vertices = new Point[1];
     }
 
     /**
@@ -37,6 +44,18 @@ public class GraphProcessor {
 
     public void initialize(FileInputStream file) throws IOException {
         // TODO implement by reading info and creating graph
+        Scanner reader = new Scanner(file);
+        String lineOne = reader.nextLine();
+        String[] nums = lineOne.split(" ");
+        numVertices = Integer.parseInt(nums[0]);
+        numEdges = Integer.parseInt(nums[1]);
+        for(int i = 0; i < numVertices; i++)
+        {
+            String line = reader.nextLine();
+            String[] data = line.split(" ");
+            
+        }
+        throw new IOException("Could not read .graph file");
     }
 
     /**
