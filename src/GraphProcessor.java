@@ -124,9 +124,16 @@ public class GraphProcessor {
      * @return The closest point in the graph to p
      */
     public Point nearestPoint(Point p) {
-        // TODO implement nearestPoint
-
-        return null;
+        Double min = Double.POSITIVE_INFINITY;
+        Point closestPoint = p;
+        for (Point eachpoint : myMap.keySet()) {
+            Double newdistance = p.distance(eachpoint);
+            if (newdistance < min) {
+                min = newdistance;
+                closestPoint = eachpoint;
+            }
+        }
+        return closestPoint;
     }
 
 
