@@ -150,9 +150,12 @@ public class GraphProcessor {
         double d = 0.0;
         // TODO implement routeDistance
         int len = route.size();
-        for(int i = 0; i < len; i++)
+        for(int i = 0; i < len - 1; i++)
         {
-            
+            Point start = route.get(i);
+            Point end = route.get(i + 1);
+            double dis = start.distance(end);
+            d += dis;
         }
         return d;
     }
