@@ -170,7 +170,28 @@ public class GraphProcessor {
      * @return true if and onlyu if p2 is reachable from p1 (and vice versa)
      */
     public boolean connected(Point p1, Point p2) {
-        // TODO implement connected
+        HashSet<Point> visited = new HashSet<>();
+        Stack<Point> toVisit = new Stack<>();
+        toVisit.push(p1);
+        visited.add(p1);
+        while(!toVisit.isEmpty()){
+            Point current = toVisit.pop();
+            if(current.equals(p2))
+            {
+                return true;
+            }
+            List<Point> neighbors = myMap.get(current);//get neighbors
+            for(Point each : neighbors){//for each neighbor 
+                if(!visited.contains(each)) // if it hasn't been visited
+                {
+                    toVisit.push(each); 
+                    visited.add(each);
+                }
+                if(visited.contains(p2)){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -187,7 +208,10 @@ public class GraphProcessor {
      * either because start is not connected to end or because start equals end.
      */
     public List<Point> route(Point start, Point end) throws IllegalArgumentException {
-        // TODO implement route
+        if (start.equals(end) || !connected(start, end)) {
+            throw new IllegalArgumentException();
+        }
+        HashMap<Point, Point> prev = new HashMap<>();
         return null;
     }
     public static void main(String[] args) throws FileNotFoundException, IOException {
