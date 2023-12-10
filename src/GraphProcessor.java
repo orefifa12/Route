@@ -142,6 +142,11 @@ public class GraphProcessor {
     public double routeDistance(List<Point> route) {
         double d = 0.0;
         // TODO implement routeDistance
+        int len = route.size();
+        for(int i = 0; i < len; i++)
+        {
+            
+        }
         return d;
     }
     
