@@ -24,14 +24,16 @@ public class GraphProcessor {
     private HashMap<Point, List<Point>> myMap;
     private int numVertices;
     private int numEdges;
-    private Point[] vertices;
+    //private HashMap<String, Point> myVertices; //name associated with vertices
+    private Point[] myPoints; //to preserve indices
 
     public GraphProcessor(){
         // TODO initialize instance variables
         myMap = new HashMap<>();
         numVertices = 0;
         numEdges = 0;
-        vertices = new Point[1];
+        //myVertices = new HashMap<>();
+        myPoints = new Point[1];
     }
 
     /**
@@ -49,13 +51,53 @@ public class GraphProcessor {
         String[] nums = lineOne.split(" ");
         numVertices = Integer.parseInt(nums[0]);
         numEdges = Integer.parseInt(nums[1]);
+        //myVertices = new HashMap<>();
+        myPoints = new Point[numVertices];
         for(int i = 0; i < numVertices; i++)
         {
             String line = reader.nextLine();
             String[] data = line.split(" ");
-            
+            //String name = data[0];
+            double x = Double.parseDouble(data[1]);
+            double y = Double.parseDouble(data[2]);
+            Point me = new Point(x, y);
+            //myVertices.put(name, me);
+            myPoints[i] = me;
         }
-        throw new IOException("Could not read .graph file");
+        for(int i = 0; i < numEdges; i++)
+        {
+            String line = reader.nextLine();
+            String[] data = line.split(" ");
+            int start = Integer.parseInt(data[0]);
+            int end = Integer.parseInt(data[1]);
+            //String name = data[2];
+            if(myMap.keySet().contains(myPoints[start]))
+            {
+                List<Point> list = myMap.get(myPoints[start]);
+                list.add(myPoints[end]);
+                myMap.put(myPoints[start], list);
+            }
+            else
+            {
+                List<Point> list = new ArrayList<>();
+                list.add(myPoints[end]);
+                myMap.put(myPoints[start], list);
+            }
+
+            if(myMap.keySet().contains(myPoints[end]))
+            {
+                List<Point> list = myMap.get(myPoints[end]);
+                list.add(myPoints[start]);
+                myMap.put(myPoints[end], list);
+            }
+            else
+            {
+                List<Point> list = new ArrayList<>();
+                list.add(myPoints[start]);
+                myMap.put(myPoints[end], list);
+            }
+        }
+        reader.close();
     }
 
     /**
