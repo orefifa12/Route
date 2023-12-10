@@ -1,6 +1,7 @@
 import java.security.InvalidAlgorithmParameterException;
 import java.io.*;
 import java.util.*;
+import java.util.Comparator;
 
 
 /**
@@ -26,6 +27,7 @@ public class GraphProcessor {
     private int numEdges;
     //private HashMap<String, Point> myVertices; //name associated with vertices
     private Point[] myPoints; //to preserve indices
+    private Point destination;
 
     public GraphProcessor(){
         // TODO initialize instance variables
@@ -211,8 +213,10 @@ public class GraphProcessor {
         if (start.equals(end) || !connected(start, end)) {
             throw new IllegalArgumentException();
         }
-        HashMap<Point, Point> prev = new HashMap<>();
+        List<Point> route = new ArrayList<>();
+        PriorityQueue<Point> toVisit = new PriorityQueue<>();
         return null;
+
     }
     public static void main(String[] args) throws FileNotFoundException, IOException {
         String name = "data/usa.graph";
