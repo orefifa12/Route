@@ -223,21 +223,19 @@ public class GraphProcessor {
         final Comparator<Point> comp = new Comparator<Point>(){ //this will compare the distances of two points
             @Override
             public int compare(Point p1, Point p2){
+                if (p1 == null && p2 == null) {
+                    return 0;
+                } else if (p1 == null) {
+                    return -1;
+                } else if (p2 == null) {
+                    return 1;
+                }
                 return p1.compareTo(p2);//compare the distances
             }
         };
         PriorityQueue<Point> pq = new PriorityQueue<Point>(comp);//
         Point current = start;//start at the start
-        // Remove the duplicate declaration of distanceMap
-        // Map<Point, Double> distanceMap = new HashMap<>();
-        // Map<Point, Double> distanceMap = new HashMap<>();
-        for (Point point : myMap.keySet()) {
-            if (point.equals(start)) {
-                distanceMap.put(point, 0.0); // Set distance of start point to 0
-            } else {
-                distanceMap.put(point, Double.MAX_VALUE); // Set distance of other points to a large value
-            }
-        }
+        distanceMap.put(start, 0.0);//put the start in the distance map
         pq.add(current);//
 
         while (pq.size() > 0){
@@ -247,8 +245,8 @@ public class GraphProcessor {
             }
             for(Point p: myMap.get(current)){//for each neighbor of the current point
                 double weight = current.distance(p);//get the weight of the edge
-                double newDistance = distanceMap.get(p) + weight;//get the distance from the start to the neighbor
-                if(newDistance < distanceMap.get(p)){//if the new distance is less than the current distance
+                double newDistance = distanceMap.get(current) + weight;//get the distance from the start to the neighbor
+                if(!distanceMap.containsKey(p) || newDistance < distanceMap.get(p)){//if the new distance is less than the current distance
                     distanceMap.put(p, newDistance);//update the distance map
                     predMap.put(p, current);//update the recon path
                     pq.add(p);//add the neighbor to the priority queue
@@ -257,7 +255,7 @@ public class GraphProcessor {
             
         }
         List<Point> shortestPath = new ArrayList<>();
-        Point point = end;
+        Point point = end;//start at the end
         while (point != null) {
             shortestPath.add(0, point);
             point = predMap.get(point);
