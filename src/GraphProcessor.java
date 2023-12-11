@@ -221,25 +221,24 @@ public class GraphProcessor {
         Map<Point,Point> predMap = new HashMap<>();
         predMap.put (start, null);
         final Comparator<Point> comp = new Comparator<Point>(){ //this will compare the distances of two points
-        @Override
-        public int compare(Point p1, Point p2){
-        double d1 = distanceMap.get(p1);//get distance of each point
-        double d2 = distanceMap.get(p2);
-        if(d1 < d2){
-        return -1;
-        }
-        else if(d1 > d2){
-        return 1;
-        }
-        else{
-        return 0;
-        }
-        }
+            @Override
+            public int compare(Point p1, Point p2){
+                return p1.compareTo(p2);//compare the distances
+            }
         };
-        PriorityQueue<Point> pq = new PriorityQueue<Point>(comp);
-        Point current = start;
-        distanceMap. put (start, 0.0) ;
-        pq.add(current);
+        PriorityQueue<Point> pq = new PriorityQueue<Point>(comp);//
+        Point current = start;//start at the start
+        // Remove the duplicate declaration of distanceMap
+        // Map<Point, Double> distanceMap = new HashMap<>();
+        // Map<Point, Double> distanceMap = new HashMap<>();
+        for (Point point : myMap.keySet()) {
+            if (point.equals(start)) {
+                distanceMap.put(point, 0.0); // Set distance of start point to 0
+            } else {
+                distanceMap.put(point, Double.MAX_VALUE); // Set distance of other points to a large value
+            }
+        }
+        pq.add(current);//
 
         while (pq.size() > 0){
             current = pq.remove();//get the next point to visit
@@ -248,7 +247,7 @@ public class GraphProcessor {
             }
             for(Point p: myMap.get(current)){//for each neighbor of the current point
                 double weight = current.distance(p);//get the weight of the edge
-                double newDistance = distanceMap.get(current) + weight;//get the distance from the start to the neighbor
+                double newDistance = distanceMap.get(p) + weight;//get the distance from the start to the neighbor
                 if(newDistance < distanceMap.get(p)){//if the new distance is less than the current distance
                     distanceMap.put(p, newDistance);//update the distance map
                     predMap.put(p, current);//update the recon path
