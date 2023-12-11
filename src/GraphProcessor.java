@@ -1,7 +1,6 @@
-import java.security.InvalidAlgorithmParameterException;
+// import java.security.InvalidAlgorithmParameterException;
 import java.io.*;
 import java.util.*;
-import java.util.Comparator;
 
 
 /**
@@ -47,8 +46,9 @@ public class GraphProcessor {
      */
 
     public void initialize(FileInputStream file) throws IOException {
-        // TODO implement by reading info and creating graph
-        Scanner reader = new Scanner(file);
+
+        
+        try{Scanner reader = new Scanner(file);
         String lineOne = reader.nextLine();
         String[] nums = lineOne.split(" ");
         numVertices = Integer.parseInt(nums[0]);
@@ -99,7 +99,11 @@ public class GraphProcessor {
                 myMap.put(myPoints[end], list);
             }
         }
-        reader.close();
+        reader.close();}
+        catch(Exception e)
+        {
+            throw new IOException("Could not read .graph file");
+        }
     }
 
     /**
@@ -213,11 +217,55 @@ public class GraphProcessor {
         if (start.equals(end) || !connected(start, end)) {
             throw new IllegalArgumentException();
         }
-        List<Point> route = new ArrayList<>();
-        PriorityQueue<Point> toVisit = new PriorityQueue<>();
-        return null;
+        Map<Point, Double> distanceMap = new HashMap<>();//this will keep track of the distance from the start to each point
+        Map<Point, Point> reconPath = new HashMap<>();//this will keep track of the previous point in the shortest route
+        reconPath.put(start, null);//the start has no previous point
+        final Comparator<Point> comp = new Comparator<Point>(){ //this will compare the distances of two points
+            @Override
+            public int compare(Point p1, Point p2){
+                double d1 = distanceMap.get(p1);//get distance of each point
+                double d2 = distanceMap.get(p2);
+                if(d1 < d2){
+                    return -1;
+                }
+                else if(d1 > d2){
+                    return 1;
+                }
+                else{
+                    return 0;
+                }
+            }
+        };
+        PriorityQueue<Point> toVisit = new PriorityQueue<Point>(comp);//this will keep track of the points to visit
+        Point current = start;
+        distanceMap.put(start, 0.0);//the start has a distance of 0
+        toVisit.add(start);//add the start to the priority queue
 
-    }
+        while (toVisit.size() > 0){
+            current = toVisit.remove();//get the next point to visit
+            if (current.equals(end)){
+                break;//if the current point is the end
+            }
+            for(Point p: myMap.get(current)){//for each neighbor of the current point
+                double weight = current.distance(p);//get the weight of the edge
+                double newDistance = distanceMap.get(current) + weight;//get the distance from the start to the neighbor
+                if(newDistance < distanceMap.get(current)){//if the new distance is less than the current distance
+                    distanceMap.put(p, newDistance);//update the distance map
+                    reconPath.put(p, current);//update the recon path
+                    toVisit.add(p);//add the neighbor to the priority queue
+                }
+            }
+            
+        }
+        List<Point> shortestPath = new ArrayList<>();
+        Point point = end;
+        while (point != null) {
+            shortestPath.add(0, point);
+            point = reconPath.get(point);
+        }
+
+        return shortestPath;
+        }
     public static void main(String[] args) throws FileNotFoundException, IOException {
         String name = "data/usa.graph";
         GraphProcessor gp = new GraphProcessor();
